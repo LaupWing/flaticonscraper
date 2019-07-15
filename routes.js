@@ -52,7 +52,7 @@ async function getIconFromFlaticon(searchTerm){
 
 async function getIconFromGoogle(searchterm){
     const evalVal = searchterm
-    const browser = await puppeteer.launch({devtools:true})
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
     await page.goto('https://www.google.com/')
     await page.waitFor('input[type="text"]')

@@ -8,16 +8,17 @@ router.get('/', (req,res)=>{
 
 router.post('/', async (req,res)=>{
     const searchTerm = req.body.search
-    const result     = await getIcon
-    res.send('test')
+    const result     = await getIconFromFlaticon(searchTerm)
+    console.log(result)
+    res.send(result)
 })
 
 
 // test()
 
-async function getIconFFlaticon(searchTerm){
+async function getIconFromFlaticon(searchTerm){
     const evalVal = searchTerm
-    const browser = await puppeteer.launch({devtools: true})
+    const browser = await puppeteer.launch()
     const page = await browser.newPage()
     await page.goto('https://www.flaticon.com/')
     await page.waitFor('input[type="search"].home_search_input')
@@ -37,7 +38,7 @@ async function getIconFFlaticon(searchTerm){
     return imgLinks
 }
 
-async function getIconFGoogle(searchterm){
+async function getIconFromGoogle(searchterm){
     const evalVal = searchTerm
     const browser = await puppeteer.launch({devtools: true})
     const page = await browser.newPage()

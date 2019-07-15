@@ -14,7 +14,6 @@ router.post('/', async (req,res)=>{
 })
 
 router.get('/icon', async (req,res)=>{
-    const searchTerm = req.body.search
     const result     = await getIconFromFlaticon("react")
     console.log(result)
     res.send(result)

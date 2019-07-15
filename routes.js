@@ -7,22 +7,16 @@ router.get('/', (req,res)=>{
 })
 
 router.post('/', async (req,res)=>{
-    const searchTerm = req.body.search
+    let searchTerm = req.body.search
+    if(searchTerm.trim().toLowerCase() === "vue")   searchTerm = "react"
     const result     = await getIconFromFlaticon(searchTerm)
-    console.log(result)
     res.send(result)
 })
 
 router.get('/icon', async (req,res)=>{
     const result     = await getIconFromFlaticon("react")
-    console.log(result)
     res.send(result)
 })
-router.get('/test', (req,res)=>{
-    res.send("test")
-})
-
-// test()
 
 async function getIconFromFlaticon(searchTerm){
     const evalVal = searchTerm

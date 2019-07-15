@@ -6,10 +6,16 @@ router.get('/', (req,res)=>{
     res.send('Hallo')
 })
 
-router.post('/', async (req,res)=>{
+router.post('/flatIcon', async (req,res)=>{
     let searchTerm = req.body.search
     if(searchTerm.trim().toLowerCase() === "vue")   searchTerm = "react"
     const result     = await getIconFromFlaticon(searchTerm)
+    res.send(result)
+})
+
+router.post('/google', async (req,res)=>{
+    let searchTerm = req.body.search
+    const result     = await getIconFromGoogle(searchTerm)
     res.send(result)
 })
 

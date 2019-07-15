@@ -3,7 +3,7 @@ const router    = express.Router()
 const puppeteer = require('puppeteer')
 
 router.get('/', (req,res)=>{
-    res.send('Hallo')
+    res.send('Hallo Welcome to the icon api which is a part of the skills website')
 })
 
 router.post('/flatIcon', async (req,res)=>{
@@ -52,17 +52,17 @@ async function getIconFromFlaticon(searchTerm){
 
 async function getIconFromGoogle(searchterm){
     const evalVal = searchterm
-    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+    const browser = await puppeteer.launch({devtools:true})
     const page = await browser.newPage()
     await page.goto('https://www.google.com/')
     await page.waitFor('input[type="text"]')
     await page.evaluate((evalVal)=>{
         document.querySelector('input[type="text"]').value = evalVal + "icon.png"
     }, evalVal)
-    await page.evaluate(() => {
+    await page.evaluate(async() => {
         const inputs = Array.from(document.querySelectorAll('input[type="submit"]'))
         const filterout = inputs.filter(input=>{
-            if(input.value.trim()==="Google zoeken")    return input
+            if(input.value==="Google zoeken")    return input
         })
         filterout[1].click()
     })

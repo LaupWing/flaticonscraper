@@ -19,8 +19,12 @@ router.post('/google', async (req,res)=>{
     res.send(result)
 })
 
-router.get('/icon', async (req,res)=>{
+router.get('/test1', async (req,res)=>{
     const result     = await getIconFromFlaticon("react")
+    res.send(result)
+})
+router.get('/test2', async (req,res)=>{
+    const result     = await getIconFromGoogle("react")
     res.send(result)
 })
 
@@ -96,6 +100,5 @@ async function getIconFromGoogle(searchterm){
     await browser.close()
     return imgLinks
 }
-console.log('logeed die wel')
 
 module.exports = router

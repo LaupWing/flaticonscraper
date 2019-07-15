@@ -7,20 +7,13 @@ router.get('/', (req,res)=>{
 })
 
 router.post('/', (req,res)=>{
-    console.log(req.body)
     res.send('test')
-    // const searchTerm = req.body.searchTerm
 })
 
-async function test(){
-
-    const iets = await getIcon('test')
-    console.log(iets)
-}
 
 // test()
 
-async function getIcon(searchTerm){
+async function getIconFFlaticon(searchTerm){
     const evalVal = searchTerm
     const browser = await puppeteer.launch({devtools: true})
     const page = await browser.newPage()
@@ -28,6 +21,28 @@ async function getIcon(searchTerm){
     await page.waitFor('input[type="search"].home_search_input')
     await page.evaluate((evalVal)=>{
         document.querySelector('input[type="search"].home_search_input').value = evalVal
+    }, evalVal)
+    await page.evaluate(() => {
+        document.querySelectorAll('button[type="submit"].flaticon-magnifier.nostyle')[1].click();
+    })
+    await page.waitForNavigation()
+    const imgLinks = await page.evaluate(() => {
+        return Array.from(document.querySelectorAll('ul.icons li.icon img'))
+            .map(item=>item.src)
+
+    })
+    await browser.close()
+    return imgLinks
+}
+
+async function getIconFGoogle(searchterm){
+    const evalVal = searchTerm
+    const browser = await puppeteer.launch({devtools: true})
+    const page = await browser.newPage()
+    await page.goto('https://www.google.com/')
+    await page.waitFor('input[type="text"]')
+    await page.evaluate((evalVal)=>{
+        document.querySelector('input[type="text"]').value = evalVal
     }, evalVal)
     await page.evaluate(() => {
         document.querySelectorAll('button[type="submit"].flaticon-magnifier.nostyle')[1].click();

@@ -13,13 +13,15 @@ router.post('/', async (req,res)=>{
     res.send(result)
 })
 
-router.get('/icon', (req,res)=>{
+router.get('/icon', async (req,res)=>{
     const searchTerm = req.body.search
     const result     = await getIconFromFlaticon("react")
     console.log(result)
     res.send(result)
 })
-
+router.get('/test', (req,res)=>{
+    res.send("test")
+})
 
 // test()
 

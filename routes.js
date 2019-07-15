@@ -6,10 +6,10 @@ router.get('/', (req,res)=>{
     res.send('Hallo')
 })
 
-router.post('/', (req,res)=>{
-    console.log(req.body)
+router.post('/', async (req,res)=>{
+    const searchTerm = req.body.search
+    const result     = await getIcon
     res.send('test')
-    // const searchTerm = req.body.searchTerm
 })
 
 async function test(){

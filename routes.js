@@ -60,11 +60,8 @@ async function getIconFromGoogle(searchterm){
         document.querySelector('input[type="text"]').value = evalVal + "icon.png"
     }, evalVal)
     await page.evaluate(async() => {
-        const inputs = Array.from(document.querySelectorAll('input[type="submit"]'))
-        const filterout = inputs.filter(input=>{
-            if(input.value==="Google zoeken")    return input
-        })
-        filterout[1].click()
+        const form = document.querySelector('form')
+        form.submit()
     })
     await page.waitForNavigation()
     await page.evaluate(() => {

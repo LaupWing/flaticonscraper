@@ -26,7 +26,7 @@ router.get('/test', (req,res)=>{
 
 async function getIconFromFlaticon(searchTerm){
     const evalVal = searchTerm
-    const browser = await puppeteer.launch({args: ['--no-sandbox']})
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
     await page.goto('https://www.flaticon.com/')
     await page.waitFor('input[type="search"].home_search_input')

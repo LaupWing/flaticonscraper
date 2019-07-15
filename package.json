@@ -1,5 +1,8 @@
 {
-  "name": "Flaticonscraper",
+  "name": "flaticonscraper",
+  "engines": {
+    "node": "12.6.0"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "app.js",

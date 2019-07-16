@@ -144,7 +144,7 @@ async function getIconFromGoogle(searchterm){
             if(link.innerText==="Afbeeldingen") link.click()
         })
     })
-    await page.waitFor('#search a')
+    await page.waitForNavigation()
     const imgLinks = await page.evaluate(() => {
         String.prototype.replaceAll = function(search, replacement) {
             var target = this;

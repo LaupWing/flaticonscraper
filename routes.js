@@ -59,11 +59,13 @@ async function getIconFromGoogle(searchterm){
     await page.evaluate((evalVal)=>{
         document.querySelector('input[type="text"]').value = evalVal + "icon.png"
     }, evalVal)
-    await page.evaluate(async() => {
+    await page.waitFor('form')
+    await page.evaluate(() => {
         const form = document.querySelector('form')
         form.submit()
     })
     await page.waitForNavigation()
+    await page.waitFor('#top_nav a')
     await page.evaluate(() => {
         const a = Array.from(document.querySelectorAll('#top_nav a'))
         a.forEach(link=>{

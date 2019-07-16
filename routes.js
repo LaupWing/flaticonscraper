@@ -17,6 +17,18 @@ router.post('/flatIcon', async (req,res)=>{
     res.send(result)
 })
 
+router.post('/undraw', async (req,res)=>{
+    let searchTerm = req.body.search
+    const result     = await getIconFromUnDraw(searchTerm)
+    res.send(result)
+})
+
+router.post('/noun', async (req,res)=>{
+    let searchTerm = req.body.search
+    const result     = await getIconFromNounProject(searchTerm)
+    res.send(result)
+})
+
 router.post('/google', async (req,res)=>{
     let searchTerm = req.body.search
     const result   = await getIconFromGoogle(searchTerm)

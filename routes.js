@@ -36,6 +36,7 @@ router.post('/google', async (req,res)=>{
 })
 
 router.post('/all', async (req,res)=>{
+    console.log('iets')
     let searchTerm = req.body.search
     const flaticon    = await getIconFromFlaticon(searchTerm)
     const nounProject = await getIconFromNounProject(searchTerm)

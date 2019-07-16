@@ -50,6 +50,53 @@ async function getIconFromFlaticon(searchTerm){
     return imgLinks
 }
 
+async function getIconFromUnDraw(searchTerm){
+    const evalVal = searchTerm
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+    const page = await browser.newPage()
+    await page.goto('https://undraw.co/search')
+    await page.waitFor('input[type="text"]#searchDraw')
+    await page.evaluate(async (evalVal)=>{
+        const input = document.querySelector('input[type="text"]#searchDraw') 
+        input.value = evalVal
+    }, evalVal)
+    await page.type('input[type="text"]#searchDraw',String.fromCharCode(13),{delay:20})
+    await page.waitFor('.item svg')
+    console.log('page loaded')
+    const svgs = await page.evaluate(()=>{
+        const svgCode = document.querySelectorAll('.item svg')
+        return Array.from(svgCode)
+            .map(svg=>svg.outerHTML)
+    })
+    await browser.close()
+    return svgs
+}
+
+async function getIconFromNounProject(searchTerm){
+    const evalVal = searchTerm
+    const browser = await puppeteer.launch({devtools:true})
+    const page = await browser.newPage()
+    await page.goto('https://thenounproject.com/')
+    await page.waitFor('input[type="search"]#search')
+    await page.evaluate(async (evalVal)=>{
+        const input = document.querySelector('input[type="search"]#search') 
+        input.value = evalVal
+    }, evalVal)
+    await page.evaluate(async ()=>{
+        const form = document.querySelector('form')
+        form.submit()
+    })
+    await page.waitFor('.Grid-cell.loaded img')
+    const imgs = await page.evaluate(async ()=>{
+        const imgsArray = document.querySelectorAll('.Grid-cell.loaded img')
+        return Array.from(imgsArray)
+            .map(img=>img.src)
+    })
+    console.log(imgs)
+    await browser.close()
+    return imgs
+}
+
 async function getIconFromGoogle(searchterm){
     const evalVal = searchterm
     const browser = await puppeteer.launch({devtools:true})

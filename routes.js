@@ -19,6 +19,18 @@ router.post('/google', async (req,res)=>{
     res.send(result)
 })
 
+router.post('/all', async (req,res)=>{
+    let searchTerm = req.body.search
+    const flaticon    = await getIconFromFlaticon(searchTerm)
+    const nounProject = await getIconFromNounProject(searchTerm)
+    const undraw      = await getIconFromUnDraw(searchTerm)
+    res.send({
+        flaticon,
+        nounProject,
+        undraw
+    })
+})
+
 router.get('/testFlaticon', async (req,res)=>{
     const result     = await getIconFromFlaticon("react")
     res.send(result)
@@ -82,7 +94,7 @@ async function getIconFromUnDraw(searchTerm){
 
 async function getIconFromNounProject(searchTerm){
     const evalVal = searchTerm
-    const browser = await puppeteer.launch({devtools:true})
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
     await page.goto('https://thenounproject.com/')
     await page.waitFor('input[type="search"]#search')
@@ -107,7 +119,7 @@ async function getIconFromNounProject(searchTerm){
 
 async function getIconFromGoogle(searchterm){
     const evalVal = searchterm
-    const browser = await puppeteer.launch({devtools:true})
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
     await page.goto('https://www.google.com/')
     await page.waitFor('input[type="text"]')

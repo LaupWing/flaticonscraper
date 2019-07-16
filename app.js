@@ -6,7 +6,7 @@ const router     = require('./routes')
 const cors       = require('cors')
 
 app
-    .use(cors)
+    .use(cors())
     .use(bodyParser.urlencoded({ extended: false }))
     .use(bodyParser.json())
     .use(router)

@@ -2,6 +2,10 @@ const express   = require('express')
 const router    = express.Router()
 const puppeteer = require('puppeteer')
 
+async function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 router.get('/', (req,res)=>{
     res.send('Hallo Welcome to the icon api which is a part of the skills website')
 })
@@ -82,7 +86,7 @@ async function getIconFromUnDraw(searchTerm){
     }, evalVal)
     await page.type('input[type="text"]#searchDraw',String.fromCharCode(13),{delay:20})
     await page.waitFor('.item svg')
-    console.log('page loaded')
+    await timeout(500)
     const svgs = await page.evaluate(()=>{
         const svgCode = document.querySelectorAll('.item svg')
         return Array.from(svgCode)
@@ -94,7 +98,7 @@ async function getIconFromUnDraw(searchTerm){
 
 async function getIconFromNounProject(searchTerm){
     const evalVal = searchTerm
-    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+    const browser = await puppeteer.launch({devtools:true})
     const page = await browser.newPage()
     await page.goto('https://thenounproject.com/')
     await page.waitFor('input[type="search"]#search')
@@ -107,13 +111,14 @@ async function getIconFromNounProject(searchTerm){
         form.submit()
     })
     await page.waitFor('.Grid-cell.loaded img')
+    await timeout(500)
     const imgs = await page.evaluate(async ()=>{
         const imgsArray = document.querySelectorAll('.Grid-cell.loaded img')
         return Array.from(imgsArray)
             .map(img=>img.src)
     })
     console.log(imgs)
-    await browser.close()
+    // await browser.close()
     return imgs
 }
 

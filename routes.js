@@ -19,12 +19,20 @@ router.post('/google', async (req,res)=>{
     res.send(result)
 })
 
-router.get('/test1', async (req,res)=>{
+router.get('/testFlaticon', async (req,res)=>{
     const result     = await getIconFromFlaticon("react")
     res.send(result)
 })
-router.get('/test2', async (req,res)=>{
+router.get('/testGoogle', async (req,res)=>{
     const result     = await getIconFromGoogle("react")
+    res.send(result)
+})
+router.get('/testUndraw', async (req,res)=>{
+    const result     = await getIconFromUnDraw("react")
+    res.send(result)
+})
+router.get('/testNoun', async (req,res)=>{
+    const result     = await getIconFromNounProject("react")
     res.send(result)
 })
 

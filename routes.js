@@ -98,7 +98,7 @@ async function getIconFromUnDraw(searchTerm){
 
 async function getIconFromNounProject(searchTerm){
     const evalVal = searchTerm
-    const browser = await puppeteer.launch({devtools:true})
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
     await page.goto('https://thenounproject.com/')
     await page.waitFor('input[type="search"]#search')

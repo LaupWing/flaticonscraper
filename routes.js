@@ -131,7 +131,7 @@ async function getIconFromNounProject(searchTerm){
             .map(img=>img.src)
     })
     console.log(imgs)
-    // await browser.close()
+    await browser.close()
     return imgs
 }
 

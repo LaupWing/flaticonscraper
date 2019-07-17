@@ -11,22 +11,37 @@ router.get('/', (req,res)=>{
 })
 
 router.post('/flatIcon', async (req,res)=>{
-    let searchTerm = req.body.search
-    if(searchTerm.trim().toLowerCase() === "vue")   searchTerm = "react"
-    const result     = await getIconFromFlaticon(searchTerm)
-    res.send(result)
+    try{
+        let searchTerm = req.body.search
+        if(searchTerm.trim().toLowerCase() === "vue")   searchTerm = "react"
+        const result     = await getIconFromFlaticon(searchTerm)
+        res.send(result)
+    }
+    catch(err){
+        res.send(err)
+    }
 })
 
 router.post('/undraw', async (req,res)=>{
-    let searchTerm = req.body.search
-    const result     = await getIconFromUnDraw(searchTerm)
-    res.send(result)
+    try{
+        let searchTerm = req.body.search
+        const result     = await getIconFromUnDraw(searchTerm)
+        res.send(result)
+    }
+    catch(err){
+        res.send(err)
+    }
 })
 
 router.post('/noun', async (req,res)=>{
-    let searchTerm = req.body.search
-    const result     = await getIconFromNounProject(searchTerm)
-    res.send(result)
+    try{
+        let searchTerm = req.body.search
+        const result     = await getIconFromNounProject(searchTerm)
+        res.send(result)
+    }
+    catch(err){
+        res.send(err)
+    }
 })
 
 router.post('/google', async (req,res)=>{

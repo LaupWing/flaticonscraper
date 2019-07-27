@@ -91,7 +91,7 @@ async function getIconFromFlaticon(searchTerm){
 
 async function getIconFromUnDraw(searchTerm){
     const evalVal = searchTerm
-    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+    const browser = await puppeteer.launch({devtools: true})
     const page = await browser.newPage()
     await page.goto('https://undraw.co/search')
     await page.waitFor('input[type="text"]#searchDraw')
@@ -99,9 +99,14 @@ async function getIconFromUnDraw(searchTerm){
         const input = document.querySelector('input[type="text"]#searchDraw') 
         input.value = evalVal
     }, evalVal)
+    // setTimeout(async ()=>{
+    //     console.log('took to long')
+    //     await browser.close()
+    //     return []
+    // },5000)
     await page.type('input[type="text"]#searchDraw',String.fromCharCode(13),{delay:20})
-    await page.waitFor('.item svg')
-    await timeout(500)
+    // await page.waitFor('.item svg')
+    await timeout(2000)
     const svgs = await page.evaluate(()=>{
         const svgCode = document.querySelectorAll('.item svg')
         return Array.from(svgCode)
@@ -125,7 +130,7 @@ async function getIconFromNounProject(searchTerm){
         const form = document.querySelector('form')
         form.submit()
     })
-    await page.waitFor('.Grid-cell.loaded img')
+    await page.waitForNavigation();
     await timeout(500)
     const imgs = await page.evaluate(async ()=>{
         const imgsArray = document.querySelectorAll('.Grid-cell.loaded img')

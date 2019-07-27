@@ -91,7 +91,7 @@ async function getIconFromFlaticon(searchTerm){
 
 async function getIconFromUnDraw(searchTerm){
     const evalVal = searchTerm
-    const browser = await puppeteer.launch({devtools: true})
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
     await page.goto('https://undraw.co/search')
     await page.waitFor('input[type="text"]#searchDraw')

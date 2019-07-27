@@ -50,19 +50,6 @@ router.post('/google', async (req,res)=>{
     res.send(result)
 })
 
-router.post('/all', async (req,res)=>{
-    console.log('iets')
-    let searchTerm = req.body.search
-    const flaticon    = await getIconFromFlaticon(searchTerm)
-    const nounProject = await getIconFromNounProject(searchTerm)
-    const undraw      = await getIconFromUnDraw(searchTerm)
-    res.send({
-        flaticon,
-        nounProject,
-        undraw
-    })
-})
-
 router.get('/testFlaticon', async (req,res)=>{
     const result     = await getIconFromFlaticon("react")
     res.send(result)
@@ -145,7 +132,6 @@ async function getIconFromNounProject(searchTerm){
         return Array.from(imgsArray)
             .map(img=>img.src)
     })
-    console.log(imgs)
     await browser.close()
     return imgs
 }

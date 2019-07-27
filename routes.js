@@ -7,7 +7,7 @@ async function timeout(ms) {
   }
 
 router.get('/', (req,res)=>{
-    res.send('Hallo Welcome to the icon api which is a part of the skills website... Suddend bug: Trying to fix it')
+    res.send('Hallo Welcome to the icon api which is a part of the skills website... Suddend bug: Returned a empty object')
 })
 
 router.post('/flatIcon', async (req,res)=>{

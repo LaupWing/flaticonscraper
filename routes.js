@@ -44,6 +44,17 @@ router.post('/noun', async (req,res)=>{
     }
 })
 
+router.post('/getFavicon', async (req,res)=>{
+    try{
+        let url = req.body.url
+        const result     = await getFavicon(url)
+        res.send(result)
+    }
+    catch(err){
+        res.send(err)
+    }
+})
+
 router.post('/google', async (req,res)=>{
     let searchTerm = req.body.search
     const result   = await getIconFromGoogle(searchTerm)
@@ -66,6 +77,7 @@ router.get('/testNoun', async (req,res)=>{
     const result     = await getIconFromNounProject("react")
     res.send(result)
 })
+
 
 async function getIconFromFlaticon(searchTerm){
     const evalVal = searchTerm
@@ -189,6 +201,26 @@ async function getIconFromGoogle(searchterm){
     })
     await browser.close()
     return imgLinks
+}
+
+
+async function getFavicon(url){
+    const browser = await puppeteer.launch({devtools:true})
+    const page = await browser.newPage()
+    await page.goto(url)
+    setTimeout(async()=>{
+        await browser.close() 
+        return []   
+    },5000)
+    await page.waitFor('head link[rel="icon"]')
+    const iconRel = await page.evaluate(()=>{
+        const link = Array.from(document.querySelectorAll('head link[rel="icon"]'))
+            .map(icon=>icon.href)
+        console.log(link)
+        return link
+    })
+    await browser.close()
+    return iconRel
 }
 
 module.exports = router

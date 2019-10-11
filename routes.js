@@ -133,9 +133,9 @@ async function getIconFromNounProject(searchTerm){
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
     const page = await browser.newPage()
     await page.goto('https://thenounproject.com/')
-    await page.waitFor('input[type="search"]#search')
+    await page.waitFor('input#search')
     await page.evaluate(async (evalVal)=>{
-        const input = document.querySelector('input[type="search"]#search') 
+        const input = document.querySelector('input#search') 
         input.value = evalVal
     }, evalVal)
     await page.evaluate(async ()=>{
@@ -205,13 +205,12 @@ async function getIconFromGoogle(searchterm){
 
 
 async function getFavicon(url){
-    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
+    const browser = await puppeteer.launch({devtools: true})
     const page = await browser.newPage()
     await page.goto(url)
-    setTimeout(async()=>{
-        await browser.close() 
-        return []   
-    },5000)
+    // setTimeout(async()=>{
+    //     await browser.close()
+    // },5000)
     await page.waitFor('head link[rel="icon"]')
     const iconRel = await page.evaluate(()=>{
         const link = Array.from(document.querySelectorAll('head link[rel="icon"]'))
